@@ -12,16 +12,18 @@ RUN apt-get -qq update && apt-get -y -qq dist-upgrade && \
   # libsecret-1-dev is required even for prebuild keytar
   libsecret-1-dev \
   # Used by seshat (when not SQLCIPHER_STATIC) \
-  libsqlcipher-dev && \
+  libsqlcipher-dev \
+  rpm flatpak flatpak-builder && \
   apt-get purge -y --auto-remove && rm -rf /var/lib/apt/lists/*
 RUN ln -s /usr/bin/python3 /usr/bin/python & ln -s /usr/bin/pip3 /usr/bin/pip
 
 ENV DEBUG_COLORS true
 ENV FORCE_COLOR true
+ENV SQLCIPHER_BUNDLED 1
 
 WORKDIR /project
 
-ENV NODE_VERSION 20.15.1
+ENV NODE_VERSION 22.9.0
 ARG TARGETOS
 ARG TARGETARCH
 COPY setup.sh /setup.sh
