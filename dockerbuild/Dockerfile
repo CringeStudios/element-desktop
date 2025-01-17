@@ -13,8 +13,9 @@ RUN apt-get -qq update && apt-get -y -qq dist-upgrade && \
   libsecret-1-dev \
   # Used by seshat (when not SQLCIPHER_STATIC) \
   libsqlcipher-dev \
-  rpm flatpak flatpak-builder && \
+  rpm flatpak flatpak-builder wine && \
   apt-get purge -y --auto-remove && rm -rf /var/lib/apt/lists/*
+RUN dpkg --add-architecture i386 && apt-get update && apt-get install -y wine32 mono-devel
 RUN ln -s /usr/bin/python3 /usr/bin/python & ln -s /usr/bin/pip3 /usr/bin/pip
 
 ENV DEBUG_COLORS true
